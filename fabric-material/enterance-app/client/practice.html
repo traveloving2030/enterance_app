@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script> let userData = {name: "정지원", timestamp: Date.now() } 
+    </script>
+</head>
+
+<body>
+    <font size="4">
+        <div id='username'></div>
+    </font>
+    <font size="1"><br></font>
+    <div align="center"><button class="btn btn-primary" id="login">로그인</button></div>
+    <div align="right"><button class="btn btn-primary" id="logout">로그아웃</button></div>
+    <script>
+        let userName = document.getElementById('username');
+        userName.innerHTML = "<font color='black' size='5'>" + userData.name + "</font><font color='white'>님, 반갑습니다!</font>";
+        let loginBtn = document.getElementById('login');
+
+        function getStorage_promise() {
+            return new Promise((resolve, reject) => {
+                sessionStorage.setItem('ID', userData.Key);
+                let id_temp=sessionStorage.getItem('ID');
+                if(id_temp!=undefined){
+                    resolve(id_temp);
+                }
+                else{
+                    reject(new Error("Key없음"));
+                }
+            })
+        }
+        loginBtn.onclick = () => {
+            getStorage_promise().then(function(result){
+                console.log(result);
+            }).catch(function (err){
+                console.error(err);
+            })
+        }
+
+
+
+        let logoutBtn = document.getElementById('logout');
+        logoutBtn.onclick = () => {
+            sessionStorage.removeItem("ID");
+        }
+    </script>
+</body>
+
+</html>
